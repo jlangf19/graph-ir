@@ -6,6 +6,12 @@
 ### Software
 **Python:** Version 3.9+
 Required packages: scapy, py2neo, pandas (see setup for installation)
+
 **Neo4j:** Version 4.4+ (Community or Enterprise Edition)
 ## Setup
+
+**Neo4j:**
+* **Source:** /etc/neo4j/neo4j.conf
+* **Data Import:** All data required for import into the graph database must be placed within */var/lib/neo4j/import*. Current cypher ingestion expressions ingest .CSV files.
+* **Launch:** Launch Neo4j server with the following command: *sudo neo4j start*
 ## Sources
