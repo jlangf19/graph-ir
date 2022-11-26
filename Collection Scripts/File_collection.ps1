@@ -1,4 +1,10 @@
-﻿
+<#
+Author: Joshua Langford
+Description: This script collects metadata of Windows file objects and selects specific properties related to forensic analysis.
+Output:
+    Type: CSV
+    Attributes: Name, file path, file extension, SHA1 hash, creation time, last access time, and last write time (all in Neo4j time formatting)
+#>
 $files = ls | Where-Object -Property Attributes -eq 'Archive'
 foreach($x in $files){
     $x| Add-Member ($x.Directory.ToString() + "\" + $x.Name.ToString()) -Name Path -MemberType NoteProperty
