@@ -10,6 +10,11 @@ foreach($x in $services){
     $path = $x.pathname -split " -"
     $path = $path[0] -split " /"
     $path = $path -replace '["]'
+    $hostname = Get-WmiObject Win32_ComputerSystem | Select-Object -ExpandProperty name
+    $domain = Get-WmiObject Win32_ComputerSystem | Select-Object -ExpandProperty domain
+    $x | Add-Member $hostname -Name hostname -MemberType NoteProperty
+    $x | Add-Member $domain -Name domain -MemberType NoteProperty
     $x | Add-Member $path[0] -Name filepath -MemberType NoteProperty
 }
-$services | Export-Csv -Path 'C:\Users\jlang\Documents\HES\CSCI E-59\Final Project\Data Sources\services.csv'
+$json_services = ConvertTo-Json -InputObject $services
+$json_services | Out-File '\\TRUENAS\data\BACKUP\Storage\IR Graph Project\Collection Scripts\Development\services.json'
