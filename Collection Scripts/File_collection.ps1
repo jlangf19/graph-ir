@@ -19,5 +19,7 @@ foreach($x in $files){
     $x | Add-Member (('{0:yyyyMMdd}' -f $x.LastWriteTimeUtc).ToString() + "T" + ('{0:HH:mm}' -f $x.LastWriteTimeUtc).ToString() + "Z") -Name neo4jlastwritetime -MemberType NoteProperty
 }
 $files = $files | Select-Object -Property Name,Path,Extension,hostname,domain,neo4jcreationtime,neo4jlastaccesstime,neo4jlastwritetime,hash,mode,length,exists
-$json_files = ConvertTo-Json -InputObject $files
-$json_files | Out-File '\\TRUENAS\data\BACKUP\Storage\IR Graph Project\Collection Scripts\Development\files.json'
+$files = $files | Select-Object -Property Name,Path,Extension,hostname,domain,neo4jcreationtime,neo4jlastaccesstime,neo4jlastwritetime,hash,mode,length,exists
+$files | ConvertTo-Csv -NoTypeInformation | Select-Object -Skip 1 | Set-Content -path 'C:\Users\jlang\Documents\Development\Offline Scripts\files.csv'
+#$json_files = ConvertTo-Json -InputObject $files
+#$json_files | Out-File '\\TRUENAS\data\BACKUP\Storage\IR Graph Project\Collection Scripts\Development\files.json'
