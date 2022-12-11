@@ -13,6 +13,9 @@ Required packages: scapy, py2neo, pandas (see setup for installation)
 **Neo4j:**
 * **Configuration:** /etc/neo4j/neo4j.conf
 * **Data Import:** All data required for import into the graph database must be placed within */var/lib/neo4j/import*. Current cypher ingestion expressions ingest .CSV files.
+Note: For Neo4j Desktop Edition, ingestion will take place within */home/USER/.config/Neo4j Desktop/Application/relate-data/dbmss/dbms-XXX/import*
+
 * **Database:** Default database is *neo4j*. Default database can be changed by modifying the *dbms.default_database* variable in the configuration file.
 * **Launch:** Launch Neo4j server with the following command: *sudo neo4j start*
+
 ## Sources
