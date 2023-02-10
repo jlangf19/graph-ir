@@ -4,8 +4,8 @@
 Function Parse-Line {
     Param(
         $Value
-    )
-    $Value = $Value.Split(":")
+    ) 
+    $Value = $Value -split ":", 2
     $Value[0] = $Value[0].Trim()
     $Value[1] = $Value[1].Trim()
     $Value = @{$Value[0] = $Value[1]}
@@ -18,17 +18,25 @@ Function Parse-LogonObject {
         $Logon
     )
     # Indicates the positions within a Powershell logon event message that contain information of value
-    $value_index = @(18,24,26,30,36,38,40,42,44,46,48,56,58,64,66,68,74,76,78)
+    # Note: index values inconsistent with previous identified relevant keys
+    $value_index = @(9,11,12,14,17,18,19,20,21,22,23,27,28,31,32,33,36,37,38)
     $vals = @{time = $Logon.TimeGenerated; hostname = $Logon.MachineName}
     $message = $Logon.Message
     $message = $message.Split([Environment]::NewLine)
     foreach ($index in $value_index) {
         $val = Parse-Line -Value $message[$index]
         # Checks for values requiring conversion from the msobj.dll format (Virtual Account, Elevated Token, Impersonation Level)
-        if($index -in 24,26,40){
+        if($index -in 11,12,14){
             $temp_key = $val.GetEnumerator().Name
             $temp_val = $val[$temp_key]
             $temp_val = $msobj_hash[$temp_val]
+            $val[$temp_key] = $temp_val
+        }
+        # Checks for values requiring conversion from hexidecimal (Logon ID, Linked Logon ID, PID)
+        elseif($index -in 20,21,27) {
+            $temp_key = $val.GetEnumerator().Name
+            $temp_val = $val[$temp_key]
+            $temp_val = [uint32]$temp_val
             $val[$temp_key] = $temp_val
         }
         $vals += $val
