@@ -19,6 +19,7 @@ Function Parse-LogonObject {
     )
     # Indicates the positions within a Powershell logon event message that contain information of value
     # Note: index values inconsistent with previous identified relevant keys
+    # Logon Type:\s*?(?<logon_type>\d)|Virtual Account:\s*(?<virtual_account>%%\d{4})|Elevated Token:\s*?(?<elevated_token>%%\d{4})|Impersonation Level:\s*?(?<impersonation_level>%%\d{4})|Security ID:\s*?(?<security_id>S-\d-\d-\d{2})
     $value_index = @(9,11,12,14,17,18,19,20,21,22,23,27,28,31,32,33,36,37,38)
     $vals = @{time = $Logon.TimeGenerated; hostname = $Logon.MachineName}
     $message = $Logon.Message
