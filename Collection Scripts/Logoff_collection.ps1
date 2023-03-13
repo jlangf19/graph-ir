@@ -12,7 +12,7 @@ Function Parse-LogoffObject {
     $message = $Logoff.Message
 
     # Define a regular expression to extract specific fields from the logoff message
-    $reg = '(?s)Security ID:\s*?(?<sid>S.*?)\s.*?Account Name:\s*?(?<account_name>\w.*?)\s*?Account Domain:\s*?(?<account_domain>\w.*?)\s*?Logon ID:\s*?(?<logon_id>0x\S.*?)\s/gm'
+    $reg = '(?s)Security ID:\s*?(?<sid>S.*?)\s.*?Account Name:\s*?(?<account_name>\w.*?)\s*?Account Domain:\s*?(?<account_domain>\w.*?)\s*?Logon ID:\s*?(?<logon_id>0x\S.*?)\s'
 
     # Use the regular expression to extract the fields from the logoff message and store them in $Matches
     $val = $message -match $reg
